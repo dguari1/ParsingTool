@@ -1,0 +1,230 @@
+.vslp-webcam {
+  width : 100%;
+  display : block; 
+  margin-top : 30px;
+}
+.video.background{
+  background: transparent;
+}
+
+.figureheader {
+  width: 100%;
+  height : auto; 
+  background: white;
+  display: flex;
+  justify-content: center;
+  margin: 10px 0px 10px 0px;
+  min-width: 500px;
+  } 
+
+  .zoom-selector{
+    width: 100%;
+    height : auto; 
+    background: white;
+    display: flex;
+    justify-content: center;
+    margin: 10px 0px 10px 0px;
+    min-width: 500px;
+    }
+  
+  .video-container {
+  width: 100%;
+  height : 100%; 
+  background: white;
+  display: flex;
+  justify-content: center;
+  }
+  
+  
+  .vslp-webcam button {
+    background-color: #40798C; /* Green background */
+    border: 3px solid white; /* Green border */
+    color: white; /* White text */
+    padding: 10px 10px; /* Some padding */
+    cursor: auto; /* Pointer/hand icon */
+    float: left; /* Float the buttons side by side */
+    grid-row-gap: 20px;
+    grid-column-gap: 20px;    
+    border-color : white;
+    font-family:Verdana, Geneva, sans-serif;
+    font-size: 24px;
+    outline: none;
+    border-radius: 8px;
+    min-width: 50px;
+    max-width: 200px;
+  }
+  .vslp-webcam button:hover {
+    background-color: #40798C; 
+    border: 1px solid white;
+    color: white;
+    padding: 10px 10px; /* Some padding */
+    cursor: auto; /* Pointer/hand icon */
+    float: left; /* Float the buttons side by side */
+    grid-row-gap: 10px;
+    grid-column-gap: 10px;
+    cursor: pointer;
+    opacity: 0.5;
+}
+
+.vslp-webcam button:active {
+    transform: scale(0.98);
+    /* Scaling button to 0.98 to its original size */
+    box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24);
+    /* Lowering the shadow */
+}
+
+  .vslp-webcam button:disabled{
+    /* background: #f79fbf; */
+    background: 4F6D7A;
+    cursor: default;
+    transition: none;
+    pointer-events: none;
+    opacity: 0.2;
+  }
+  
+  .vslp-webcam label {
+    order: 2;
+    text-align: center;
+  }
+  
+  .vslp-webcam .controls {
+    text-align: center;
+    padding: 0.5em 0;
+    background: #333e5a;
+  }
+
+
+.btn-toolbar{
+  display: flex;
+  justify-content: center;
+  margin: 10px 0px 10px 0px;
+  min-width: 500px;
+  }
+
+  .btn-toolbar button {
+    background-color: #40798C; /* Green background */
+    border: 3px solid white; /* Green border */
+    color: white; /* White text */
+    padding: 10px 10px; /* Some padding */
+    cursor: auto; /* Pointer/hand icon */
+    float: left; /* Float the buttons side by side */
+    grid-row-gap: 20px;
+    grid-column-gap: 20px;    
+    border-color : whitesmoke;
+    font-family:Verdana, Geneva, sans-serif;
+    font-size: 24px;
+    outline: none;
+    border-radius: 8px;
+  }
+    .btn-toolbar button:hover {
+        background-color: #40798C; 
+        border: 1px solid white;
+        color: white;
+        padding: 10px 10px; /* Some padding */
+        cursor: auto; /* Pointer/hand icon */
+        float: left; /* Float the buttons side by side */
+        grid-row-gap: 10px;
+        grid-column-gap: 10px;
+    }
+
+    .btn-toolbar button:active {
+        transform: scale(0.98);
+        /* Scaling button to 0.98 to its original size */
+        box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24);
+        /* Lowering the shadow */
+    }
+  
+  .btn-toolbar button:not(:last-child) {
+    border-right: none; /* Prevent double borders */
+  }
+  
+  /* Clear floats (clearfix hack) */
+  .btn-toolbar:after {
+    content: "";
+    clear: both;
+    display: table;
+  }
+  
+  /* Add a background color on hover */
+  .btn-toolbar button:hover {
+    /* background-color: #3e8e41; */
+    cursor: pointer;
+    opacity: 0.8;
+  }
+
+  /* .container-waveform{
+    width: 100%;
+    height :100%; 
+    background: white;
+    display: flex;
+    justify-content: center;
+  } */
+
+  .slider {
+    width: 80%;
+    height :100%; 
+    background: white;
+    display: flex;
+    justify-content: flex-end;
+  } 
+  
+
+  .styled-table {
+    border-collapse: collapse;
+    margin: 25px 0;
+    font-size: 1.5em;
+    font-family: sans-serif;
+    min-width: 400px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    align-items: center;
+
+    /* display: block; */
+    /* margin-left: 50%; */
+    /* margin-right: 50%;  */
+}
+.styled-table thead tr {
+    background-color: #40798C;
+    color: #ffffff;
+    text-align: center;
+}
+.styled-table th,
+.styled-table td {
+    padding: 12px 15px;
+    text-align: center;
+}
+.styled-table tbody tr {
+    border-bottom: 1px solid #dddddd;
+}
+
+.styled-table tbody tr:nth-of-type(even) {
+    background-color: #EAEAEA;
+}
+
+.styled-table tbody tr:last-of-type {
+    border-bottom: thin solid #CFD8D7;
+}
+
+.save-button{
+  width: 100%;
+  height :100%; 
+  background: white;
+  display: flex;
+  justify-content: center;
+}
+
+a:link {
+  color: #777879;
+  text-decoration: none;
+  font-size: large;
+  font-weight: bold;
+
+}
+a:visited {
+  color: #c4c6c9;
+  text-decoration: none;
+  font-size: large;
+  font-weight: bold;
+}
+
+
+

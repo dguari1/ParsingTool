@@ -62,7 +62,9 @@ class VideoAudioParsing extends Component {
         this.regionToChange = null // variable that indicates what region is going to be modified 
 
         this.inputFile = createRef(); // this is a reference to the input file
-        this.loadButtonTag = createRef();
+        this.loadButtonTag = createRef(); 
+        this.loadSegmentsTag = createRef();
+        this.inputFileSegment = createRef();
         // this.loadingAnimation = createRef();
         this.zoomSelect = createRef();
 
@@ -141,63 +143,6 @@ class VideoAudioParsing extends Component {
         //display id of region removed
         this.wavesurfer.current.on('region-remove', this.handleRegionRemoved);
 
-  
-        // fetch(this.props.peaks_data) //read the file
-        // .then(response => {
-        //     if(response.ok) return response.json();
-        //     else throw new Error("Not 2xx response", {cause: response});
-        //     })
-        // .then(data => {
-        //     // read peaks data
-        //     this.wavesurfer.current.load(this.videoRef.current,data.peaks);
-        //     //this.wavesurfer.current.backend.setPeaks(data.peaks);
-
-        //     //modify wavesurfer drawWave function to draw only half of the wave
-        //     //idea taken and modified from here: https://jsfiddle.net/JonKnight/xpvt214o/982381/
-        //     this.wavesurfer.current.drawer.drawWave = (peaks, channelIndex, start, end) =>  {
-        //         return this.wavesurfer.current.drawer.prepareDraw(
-        //             peaks,
-        //             channelIndex,
-        //             start,
-        //             end,
-        //             ({ absmax, hasMinVals, height, offsetY, halfH, peaks, channelIndex }) => {
-        //                 if (!hasMinVals) {
-        //                     const reflectedPeaks = [];
-        //                     const len = peaks.length;
-        //                     let i = 0;
-        //                     for (i; i < len; i++) {
-        //                         reflectedPeaks[2 * i] = peaks[i];
-        //                         reflectedPeaks[2 * i + 1] = 0
-        //                     }
-        //                     peaks = reflectedPeaks;
-        //                 }
-        
-        //                 // if drawWave was called within ws.empty we don't pass a start and
-        //                 // end and simply want a flat line
-        //                 if (start !== undefined) {
-        //                     this.wavesurfer.current.drawer.drawLine(peaks, absmax, halfH=this.wavesurfer.current.params.height, offsetY, start, end, channelIndex);
-        //                 }
-        
-        //                 // always draw a median line
-        //                 this.wavesurfer.current.drawer.fillRect(
-        //                     0,
-        //                     halfH + offsetY - this.halfPixel,
-        //                     this.width,
-        //                     this.halfPixel,
-        //                     this.barRadius,
-        //                     channelIndex
-        //                 );
-        //             }
-        //         );
-        //     }
-                    
-        // }
-        // ).catch(e => {
-        //     console.error('error loading peak file', e);
-        //     // load the media file -- peak data not available
-        //     this.wavesurfer.current.load(this.videoRef.current);
-        //     });
-      
 
         // configure the slider
         this.sliderRef.current.value = 0
@@ -445,43 +390,7 @@ class VideoAudioParsing extends Component {
         this.videoRef.current.play();
         this.videoRef.current.requestVideoFrameCallback(this.findFrameRate)
 
-        // // check if there is a parse file
-        // if (this.props.parse_file)
-        // { //read file and save it in a list of rows
-        //     fetch(this.props.parse_file) //read the file
-        //         .then(response => response.json())
-        //         .then(data => {
-        //             // // update the state with the new data and print the table
-        //             this.setState({
-        //                 rows : data,
-        //             })
-                
-        //             this.handleAddRegions(data)
-                    
-        //         }
-        //         )
-        // } else
-        // {
-        //     console.log('not parsing file')
-        // }
-
-
-        // fetch(this.props.parse_file) //read the file
-        //     .then(response => {
-        //                 if(response.ok) return response.json();
-        //                 else throw new Error("Not 2xx response", {cause: response});
-        //          })
-        //     .then(data => {
-        //             // // update the state with the new data and print the table
-        //             this.setState({
-        //                 rows : data,
-        //             })
-                    
-        //             this.handleAddRegions(data)
-        //             console.log(data)
-        //         }
-        //         )
-        //     .catch(error=>console.log(error))
+      
 
     }
 
@@ -497,30 +406,6 @@ class VideoAudioParsing extends Component {
                     this.videoRef.current.currentTime = this.duration;
                 }
 
-
-
-                // // update region if it is selected
-                // if (this.regionToChange !== null) {
-
-                //     const idx = this.state.rows.findIndex(e=>e.id === this.regionToChange.id);
-                //     //update region
-                //     const rows = this.state.rows;
-                //     if (this.regionToChange.position === "start") {
-                //         rows[idx] = {
-                //                 id:  rows[idx].id,
-                //                 start: this.videoRef.current.currentTime.toFixed(3),
-                //                 end: rows[idx].end.toFixed(3),
-                //             }
-                //     } else {
-                //         rows[idx] = {
-                //                 id:  rows[idx].id,
-                //                 start: rows[idx].start.toFixed(3),
-                //                 end: this.videoRef.current.currentTime.toFixed(3),
-                //             }
-                //     }
-
-                //     this.setState({ rows: rows });
-                // }
             }
         }
     }
@@ -581,9 +466,14 @@ class VideoAudioParsing extends Component {
                 this.handleSave(event)
                 
                 break;
-            case 'load':
+            case 'load':    
                 this.inputFile.current.click();
                 break;
+
+            case 'segments':
+                this.inputFileSegment.current.click()
+                break;
+
             default:
                 break;
         }
@@ -627,6 +517,7 @@ class VideoAudioParsing extends Component {
             // this.loadingAnimation.current.style.display = 'block';
             // this.videoRef.current.style.display = 'none';
             this.loadButtonTag.current.disabled = true;
+            this.loadSegmentsTag.current.disabled = true;
             
         }
         // reader.onprogress = function(event) {
@@ -645,6 +536,7 @@ class VideoAudioParsing extends Component {
             this.wavesurfer.current.load(this.videoRef.current);
             this.videoRef.current.setAttribute('controls', 'true');
             this.loadButtonTag.current.disabled = false;
+            this.loadSegmentsTag.current.disabled = false;
 
         };
 
@@ -655,6 +547,54 @@ class VideoAudioParsing extends Component {
         this.setState({file_name : file.name})
 
     }
+
+    fileUploadSegment = (event) => {
+        // load a file with segments information and update the view 
+
+        const file = event.target.files[0];
+
+        let reader = new FileReader();
+        reader.onload = (e) => {
+            fetch(e.target.result) //read the file
+                .then(response => {
+                            if(response.ok) return response.json();
+                            else throw new Error("Not 2xx response", {cause: response});
+                    })
+                .then(data => {
+                        // This segments will make sure that segments start and end time are not longer than the video length
+
+                        const vidDuration = this.videoRef.current.duration
+                        var itemsToRemove = []
+                        data.forEach((item, idx) => {
+                            if ((item.start > vidDuration) || (item.end > vidDuration)) { itemsToRemove.push(idx)}
+                        })
+
+                        for (var i = itemsToRemove.length -1; i >= 0; i--) {data.splice(itemsToRemove[i],1);}
+                            
+                        // update the state with the new data and print the table
+                        this.handleAddRegions(data)
+                        this.setState({
+                            rows : data,
+                        })
+                    }
+                    )
+                .catch(error=>console.log(error))
+            }
+        reader.onloadstart = (e) => {
+            this.loadSegmentsTag.current.disabled = true;      
+        }
+        reader.onloadend = (e) => {
+            this.loadSegmentsTag.current.disabled = false;
+        };
+        reader.onerror = function(event) {
+            console.log(event.target.error);
+        };
+        reader.readAsDataURL(file);
+
+    
+    }
+
+
 
 
     handleDoubleClick = (event) => {
@@ -755,6 +695,7 @@ class VideoAudioParsing extends Component {
             case "Escape":
                 // escape de-selects all the regions
                 this.handleDeselectAll();
+                break;
             default:
                 break;
         }
@@ -921,8 +862,15 @@ class VideoAudioParsing extends Component {
             <div className="vslp-webcam">
             <center>
             <div className="figureheader">
-                    <input type='file' id='file' ref={this.inputFile} onChange={this.fileUpload} style={{display: 'none'}}/>
-                    <button style = {{ width:'25%', minWidth:'200px'}} type="button" value='load' ref={this.loadButtonTag}  onClick={this.handleClick} disabled={false}>Load Video</button>
+            <div>
+                    <input type='file' id='fileVideo' ref={this.inputFile} onChange={this.fileUpload} style={{display: 'none'}}/>
+                    <button style = {{ width:'25%', minWidth:'200px'}} type="button" value='load' ref={this.loadButtonTag}  onClick={this.handleClick} disabled={false}>Load <br /> Video</button>
+            </div>
+            <div>
+                    <input type='file' id='fileSegment' ref={this.inputFileSegment} onChange={this.fileUploadSegment} style={{display: 'none'}}/>
+                    <button style = {{ width:'25%', minWidth:'200px'}} type="button" value='segments' ref={this.loadSegmentsTag}  onClick={this.handleClick} disabled={false}>Load Segments</button>
+             </div>
+                   
             </div>
 
             <div className="zoom-selector">

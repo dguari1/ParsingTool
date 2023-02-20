@@ -176,6 +176,9 @@ class VideoAudioParsing extends Component {
         data.forEach(item => {
            
                     var tempRow  = item;
+                    tempRow.attributes= {
+                                            label: item.id
+                                        }
                     // tempRow['color'] = 'rgba(197, 180, 227, .25)';
                     // tempRow['handleStyle'] = {left:{backgroundColor: "black"}, right:{backgroundColor: "black"}}
                     this.wavesurfer.current.addRegion(tempRow);
@@ -793,8 +796,8 @@ class VideoAudioParsing extends Component {
         const { name, value } = event.target;
         const rows = [...this.state.rows];
 
-        console.log(this.wavesurfer.current.regions.list)
-        console.log(rows[idx].id)
+        // console.log(this.wavesurfer.current.regions.list)
+        // console.log(rows[idx].id)
 
         switch (name) {
             case 'startTime':
@@ -807,7 +810,9 @@ class VideoAudioParsing extends Component {
                 break;
             case 'repName':
                 rows[idx].id = value;
-                this.wavesurfer.current.regions.list[this.state.rows[idx].id].update({ id: rows[idx].id});
+                // this.wavesurfer.current.regions.list[this.state.rows[idx].id].update({ id: rows[idx].id});
+                this.wavesurfer.current.clearRegions()
+                this.handleAddRegions(rows)
                 break;
             default:
                 break;
@@ -827,7 +832,7 @@ class VideoAudioParsing extends Component {
     //         this.Repetition.current.textContent = 'Start Repetition'  
     //   }
 
-        console.log(this.state.rows)
+        // console.log(this.state.rows)
       };
 
     handleRemoveRow = () => {
@@ -839,8 +844,8 @@ class VideoAudioParsing extends Component {
         
         const rows = [...this.state.rows];
         const id = rows[idx].id;
-        console.log(rows[idx].id);
-        console.log(this.wavesurfer.current.regions.list);
+        // console.log(rows[idx].id);
+        // console.log(this.wavesurfer.current.regions.list);
         
         rows.splice(idx, 1);
         this.setState({ rows: rows });
@@ -948,7 +953,7 @@ class VideoAudioParsing extends Component {
                        margin: "auto", 
                        marginTop: "10px", 
                        marginBottom: "10px",
-                       transform: "translateY(-100%)",
+                    //    transform: "translateY(-100%)",
                        //top: "-50%",
                 }}/>
           <div id="wave-timeline" ref={this.timelineRef} style = {{width: "75%",}}></div>

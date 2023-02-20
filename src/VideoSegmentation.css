@@ -226,5 +226,13 @@ a:visited {
   font-weight: bold;
 }
 
+region.wavesurfer-region:before {
+  content: attr(data-region-label);
+  position: flex;
+  top: 0;
+  justify-content: right;
+  color : #E23636;
+}
+
 
 

@@ -191,8 +191,6 @@ class VideoAudioParsing extends Component {
     }
 
     handleRegionCreated = (region) => {
-    console.log(this.state.rows)
-    console.log(region)
     // verify that the region is not already in the array
     if (!this.state.rows.some(e=>e.id === region.id)) {
         // check if there are no regions yet
@@ -236,7 +234,7 @@ class VideoAudioParsing extends Component {
             {
             // get the last region  'id'
             const lastRegion = this.state.rows[this.state.rows.length - 1].id;
-            // get the nymber of the last region
+            // get the number of the last region
             const lastRegionNumber = Number(lastRegion.substring(3, lastRegion.length));
             // create a new region and update the list of regions
             var item = null; 
@@ -795,25 +793,41 @@ class VideoAudioParsing extends Component {
         const { name, value } = event.target;
         const rows = [...this.state.rows];
 
+        console.log(this.wavesurfer.current.regions.list)
+        console.log(rows[idx].id)
+
         switch (name) {
             case 'startTime':
                 rows[idx].start = Number(value);
+                this.wavesurfer.current.regions.list[this.state.rows[idx].id].update({ start: rows[idx].start , end: rows[idx].end });
                 break;
             case 'endTime':
                 rows[idx].end = Number(value);
+                this.wavesurfer.current.regions.list[this.state.rows[idx].id].update({ start: rows[idx].start , end: rows[idx].end });
                 break;
             case 'repName':
-                rows[idx].repname = value;
+                rows[idx].id = value;
+                this.wavesurfer.current.regions.list[this.state.rows[idx].id].update({ id: rows[idx].id});
                 break;
             default:
                 break;
         }
-        this.setState({rows: rows});
-        this.wavesurfer.current.regions.list[rows[idx].id].update({ start: rows[idx].start , end: rows[idx].end });
+
+        
+        this.setState(
+            {rows: rows}, 
+            // () => {
+            //     console.log(idx)
+            //     console.log(rows[idx].id)
+            // this.wavesurfer.current.regions.list[rows[idx].id].update({ start: rows[idx].start , end: rows[idx].end });
+            // }
+        );
     //     // verify if the subject enter the End Time by hand
     //    if (name === 'endTime') {    
     //         this.Repetition.current.textContent = 'Start Repetition'  
     //   }
+
+        console.log(this.state.rows)
       };
 
     handleRemoveRow = () => {
@@ -834,7 +848,7 @@ class VideoAudioParsing extends Component {
         this.wavesurfer.current.clearRegions()
        
         this.handleAddRegions(rows)
-        console.log(this.wavesurfer.current.regions.list);
+
         
       };
 
@@ -934,7 +948,7 @@ class VideoAudioParsing extends Component {
                        margin: "auto", 
                        marginTop: "10px", 
                        marginBottom: "10px",
-                       //transform: "translateY(-100%)",
+                       transform: "translateY(-100%)",
                        //top: "-50%",
                 }}/>
           <div id="wave-timeline" ref={this.timelineRef} style = {{width: "75%",}}></div>
